@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Festa Junina</title>
+    <title>7 Anos Luis Henrique</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <style>
         body,
         html {
@@ -84,7 +86,50 @@
             background-color: #2114db;
             border-color:  #e5e74bf6;
         }
-    </style>
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel img {
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .carousel-buttons button {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .carousel-container:hover .carousel-buttons {
+            opacity: 1;
+        }
+
+      </style>
 </head>
 
 <body>
@@ -116,7 +161,7 @@
                         <p class="card-text">📅 Data: Sexta-Feira, 11 de Abril</p>
                         <p class="card-text">  ⏰ Horário: 19:00</p>
                         <p class="card-text">  📍 Local: Casa de Festa Terraço da Gávea</p>
-                            <p class="card-text">  📌 Endereço: Estr. da Gávea, 299 - Rocinha</p>
+                            <p class="card-text">  📌 Endereço: Estr. da Gávea, 308 - Rocinha</p>
                             
                                 <p class="card-text">  Prepare-se para entrar no universo do Sonic, com desafios eletrizantes e muita diversão! 🎮🔥
                             Não fique de fora dessa super corrida! Confirme sua presença e venha celebrar com a gente!</p>
@@ -127,9 +172,26 @@
                                 <p class="card-text"> Luis Henrique & Família 💙🎂</p>
                        
                     </div>
+                    <div class="carousel-container">
+                        <div class="carousel" id="carousel">
+                            <img src="assets/terraco.jpg" alt="Imagem 1">
+                            <img src="assets/terraco1.jpg" alt="Imagem 2">
+                            <img src="assets/terraco2.jpg" alt="Imagem 3">
+                            <img src="assets/terraco3.jpg" alt="Imagem 3">
+                        </div>
+                        <div class="carousel-buttons">
+                            <button id="prev">←</button>
+                            <button id="next">→</button>
+                        </div>
+                    </div>
+                
                 </div>
+
+                
+
             </div>
         </div>
+        
        
         <div class="row justify-content-center mt-4">
             <div class="col-12 text-center">
@@ -141,6 +203,45 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcᣠom/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+     <script>
+        const carousel = document.getElementById('carousel');
+        const images = carousel.children;
+        let index = 0;
+        let interval;
+
+        function startAutoSlide() {
+            interval = setInterval(() => {
+                index = (index + 1) % images.length;
+                updateCarousel();
+            }, 3000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(interval);
+        }
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        }
+
+        document.getElementById('prev').addEventListener('click', () => {
+            stopAutoSlide();
+            index = (index - 1 + images.length) % images.length;
+            updateCarousel();
+        });
+
+        document.getElementById('next').addEventListener('click', () => {
+            stopAutoSlide();
+            index = (index + 1) % images.length;
+            updateCarousel();
+        });
+
+        carousel.addEventListener('touchstart', stopAutoSlide);
+        startAutoSlide();
+    </script>
+
+    
 </body>
 
 </html>
